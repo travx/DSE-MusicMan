@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>MusicMan</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>SolrServlet</display-name>
+    <servlet-name>SolrServlet</servlet-name>
+    <servlet-class>SolrServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SolrServlet</servlet-name>
+    <url-pattern>/SolrServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>BingServlet</display-name>
+    <servlet-name>BingServlet</servlet-name>
+    <servlet-class>BingServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BingServlet</servlet-name>
+    <url-pattern>/BingServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MusicServlet</display-name>
+    <servlet-name>MusicServlet</servlet-name>
+    <servlet-class>MusicServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MusicServlet</servlet-name>
+    <url-pattern>/MusicServlet</url-pattern>
+  </servlet-mapping>  
+</web-app>
