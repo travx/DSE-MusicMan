@@ -18,11 +18,7 @@ public class MusicServlet extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public MusicServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-		//df = new DataFactory("dse.music-network.org", "music");
-		df = new DataFactory("dse1", "music");
-
+        df = DataFactory.newInstance();
     }
 
 	/**

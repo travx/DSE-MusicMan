@@ -1,6 +1,3 @@
-
-
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,7 +8,6 @@ import java.net.URLConnection;
 
 //import org.apache.tomcat.util.codec.binary.Base64;
 import org.apache.commons.codec.binary.Base64;
-
 
 public class URLReader {
 	public String getText(String strurl) throws MalformedURLException, IOException{
@@ -52,7 +48,5 @@ public class URLReader {
 		in.close();
 		return result.toString();		
 	}
-	
-
 
 }

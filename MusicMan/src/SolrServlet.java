@@ -14,20 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 public class SolrServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public SolrServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String q = URLEncoder.encode(request.getParameter("q"), "UTF-8");
-		String strurl = "http://dse2:8983/solr/music.artist/select?wt=json&indent=on&omitHeader=on&q=" + q;
+		String strurl = "http://" + Injections.getSolrEndpoint() + "/solr/music.artist/select?wt=json&indent=on&omitHeader=on&q=" + q;
 		
 		response.getWriter().print(new URLReader().getText(strurl));
 	}
@@ -36,7 +28,7 @@ public class SolrServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
 	}
 
 }
