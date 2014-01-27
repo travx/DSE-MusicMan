@@ -18,7 +18,14 @@ public class MusicServlet extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public MusicServlet() {
-        df = DataFactory.newInstance();
+        try {
+            System.out.println("making df");
+            df = DataFactory.newInstance();
+        } catch (Exception e) {
+            System.out.println("failed making DataFactory (rethrowing): "+e);
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
 	/**
