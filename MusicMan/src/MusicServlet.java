@@ -18,11 +18,14 @@ public class MusicServlet extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public MusicServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-		//df = new DataFactory("dse.music-network.org", "music");
-		df = new DataFactory("dse1", "music");
-
+        try {
+            System.out.println("making df");
+            df = DataFactory.newInstance();
+        } catch (Exception e) {
+            System.out.println("failed making DataFactory (rethrowing): "+e);
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
 	/**

@@ -22,6 +22,11 @@ public class DataFactory {
 	private Cluster cluster;
 	private Session session;
 	
+	public static DataFactory newInstance() {
+	    return new DataFactory(Injections.getCassandraEndpoint(), Injections.getKeyspace());
+	}
+	
+	/** accepts node as hostname or hostname:port format, plus keyspace to connect to (typically 'music') */
 	public DataFactory(String node, String keyspace){
 		this.setNode(node);
 		this.setKeyspace(keyspace);
@@ -30,8 +35,18 @@ public class DataFactory {
 	
 	public void connect() {
 		Builder builder = Cluster.builder();
-		builder.addContactPoints(node);
+		
+		String hostname = node;
+		Integer port = null;
+		if (node.indexOf(':')>0) {
+		    hostname = hostname.substring(0, node.indexOf(':'));
+		    port = Integer.parseInt(node.substring(node.indexOf(':')+1));
+		}
+		builder.addContactPoints(hostname);
+		if (port!=null) builder.withPort(port);
+		
 		cluster = builder.build();
+		
 		session = cluster.connect(keyspace);
 	}
 	

@@ -8,7 +8,8 @@ import java.util.UUID;
 public class MusicLoader {
 
 	public static void main(String[] args) throws IOException {
-		DataFactory df = new DataFactory("dse1", "music");
+//		DataFactory df = new DataFactory("dse1", "music");
+		DataFactory df = DataFactory.newInstance();
 		System.out.println("Connected to the cluster!");		
 		
 		BufferedReader br = new BufferedReader(new FileReader("/dse/aotm_list_ids.txt"));	
