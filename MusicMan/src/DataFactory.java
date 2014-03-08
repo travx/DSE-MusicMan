@@ -11,35 +11,49 @@ import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.Statement;
 import com.datastax.driver.core.Cluster.Builder;
+import com.datastax.driver.core.policies.ConstantReconnectionPolicy;
+import com.datastax.driver.core.policies.DowngradingConsistencyRetryPolicy;
 import com.datastax.driver.core.querybuilder.QueryBuilder;
 import com.google.gson.Gson;
 
 
 public class DataFactory {
 
-	private String node;
+	private String[] nodes;
 	private String keyspace;
 	private Cluster cluster;
 	private Session session;
+	private PreparedStatement ps_getArtist;
 	
-	public DataFactory(String node, String keyspace){
-		this.setNode(node);
+	public DataFactory(String[] nodes, String keyspace){
+		this.setNodes(nodes);
 		this.setKeyspace(keyspace);
 		connect();
 	}
 	
 	public void connect() {
 		Builder builder = Cluster.builder();
-		builder.addContactPoints(node);
+		//builder.addContactPoints(node).withCredentials("travis", "travis");
+		builder.addContactPoints(nodes);
+		
+		//Connection Options
+		builder.socketOptions().setConnectTimeoutMillis(10000);
+		builder.socketOptions().setReadTimeoutMillis(10000);
+		builder.withRetryPolicy(DowngradingConsistencyRetryPolicy.INSTANCE);
+		builder.withReconnectionPolicy(new ConstantReconnectionPolicy(100));
+		
 		cluster = builder.build();
 		session = cluster.connect(keyspace);
+		
+		//Initialize prepared statements
+		ps_getArtist = session.prepare("select * from artist_lookup where artist_id = ?");
 	}
 	
-	public String getNode() {
-		return node;
+	public String[] getNodes() {
+		return nodes;
 	}
-	public void setNode(String node) {
-		this.node = node;
+	public void setNodes(String[] nodes) {
+		this.nodes = nodes;
 	}
 	public String getKeyspace() {
 		return keyspace;
@@ -120,8 +134,7 @@ public class DataFactory {
 	}
 	
 	public Artist getArtist(int artist_id){
-		PreparedStatement ps = session.prepare("select * from artist_lookup where artist_id = ?");
-		return new Artist(session.execute(ps.bind(artist_id)).one());
+		return new Artist(session.execute(ps_getArtist.bind(artist_id)).one());
 	}
 	
 }

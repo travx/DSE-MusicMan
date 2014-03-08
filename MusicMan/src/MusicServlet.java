@@ -21,7 +21,8 @@ public class MusicServlet extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
 		//df = new DataFactory("dse.music-network.org", "music");
-		df = new DataFactory("dse1", "music");
+        String nodes[] = {"c1.music-network.org", "c2.music-network.org", "h1.music-network.org", "h2.music-network.org", "s1.music-network.org", "s2.music-network.org"};
+		df = new DataFactory(nodes, "music");
 
     }
 
